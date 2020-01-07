@@ -153,7 +153,7 @@ func ReplaceTo(dst, s, old, new []byte, n int) []byte {
 		start = j + len(old)
 	}
 	w += copy(dst[w:], s[start:])
-	if tail > 0 {
+	if tail > 0 && tail <= len(s) {
 		w += copy(dst[w:], s[len(s)-tail:])
 	}
 	return dst
