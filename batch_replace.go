@@ -111,7 +111,7 @@ func (r *BatchReplace) Commit() []byte {
 		Len:  0,
 		Cap:  dl,
 	}
-	dst := cbyte.Slice(h0)
+	dst := cbyte.Bytes(h0)
 	dst = append(dst[:0], r.s...)
 
 	addr1 := cbyte.Init(dl)
@@ -120,7 +120,7 @@ func (r *BatchReplace) Commit() []byte {
 		Len:  dl,
 		Cap:  dl,
 	}
-	buf := cbyte.Slice(h1)
+	buf := cbyte.Bytes(h1)
 	defer cbyte.ReleaseSlice(buf)
 
 	for i := 0; i < len(r.o.q); i++ {
@@ -136,7 +136,7 @@ func (r *BatchReplace) Commit() []byte {
 
 func (r *BatchReplace) Reset() {
 	r.s = r.s[:0]
-	for i:=0; i<len(r.o.q); i++ {
+	for i := 0; i < len(r.o.q); i++ {
 		r.o.q[i] = r.o.q[i][:0]
 		r.o.i, r.o.a = 0, 0
 		r.n.q[i] = r.n.q[i][:0]
@@ -150,7 +150,7 @@ func (q *batchReplaceQueue) add(p []byte, factor int) {
 	}
 	q.a += len(p) * factor
 	if q.i < q.c {
-		q.q[q.i] = append(q.q[q.i], p...)
+		q.q[q.i] = p
 		q.i++
 		return
 	}

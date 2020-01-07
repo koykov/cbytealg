@@ -78,7 +78,7 @@ func TestSplit(t *testing.T) {
 	if !EqualSet(r, splitExpect) {
 		t.Error("Split: mismatch result and expectation")
 	}
-	cbyte.ReleaseSliceSet(r)
+	cbyte.ReleaseBytesSet(r)
 }
 
 //func TestSplitLong(t *testing.T) {
@@ -96,7 +96,7 @@ func BenchmarkSplit(b *testing.B) {
 		if !EqualSet(r, splitExpect) {
 			b.Error("Split: mismatch result and expectation")
 		}
-		cbyte.ReleaseSliceSet(r)
+		cbyte.ReleaseBytesSet(r)
 	}
 }
 

@@ -72,7 +72,7 @@ func SplitN(s, sep []byte, n int) [][]byte {
 		Len:  n,
 		Cap:  n,
 	}
-	a := cbyte.SliceSet(h)
+	a := cbyte.BytesSet(h)
 
 	i := 0
 	for i < n {
@@ -116,7 +116,7 @@ func Join(s [][]byte, sep []byte) []byte {
 		Len:  n,
 		Cap:  n,
 	}
-	return cbyte.Slice(h)
+	return cbyte.Bytes(h)
 }
 
 func Replace(s, old, new []byte, n int) []byte {
@@ -138,7 +138,7 @@ func Replace(s, old, new []byte, n int) []byte {
 		Len:  l,
 		Cap:  l,
 	}
-	dst := cbyte.Slice(h)
+	dst := cbyte.Bytes(h)
 	return ReplaceTo(dst, s, old, new, n)
 }
 
