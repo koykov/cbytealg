@@ -92,9 +92,6 @@ func Join(s [][]byte, sep []byte) []byte {
 	if len(s) == 0 {
 		return []byte{}
 	}
-	if len(s) == 1 {
-		return s[0]
-	}
 	ls, lsep := len(s), len(sep)
 	n := lsep * (ls - 1)
 	for _, v := range s {
