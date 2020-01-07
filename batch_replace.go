@@ -2,8 +2,6 @@ package cbytealg
 
 import (
 	"bytes"
-	"github.com/koykov/cbyte"
-	"reflect"
 	"strconv"
 )
 
@@ -24,6 +22,8 @@ type batchReplaceQueue struct {
 
 type BatchReplace struct {
 	s []byte
+	d []byte
+	b []byte
 	o batchReplaceQueue
 	n batchReplaceQueue
 }
@@ -105,33 +105,44 @@ func (r *BatchReplace) Commit() []byte {
 	l := len(r.s) + r.n.a - r.o.a
 	dl := (len(r.s) + r.n.a - r.o.a) * 2
 
-	addr0 := cbyte.Init(dl)
-	h0 := reflect.SliceHeader{
-		Data: uintptr(addr0),
-		Len:  0,
-		Cap:  dl,
+	//addr0 := cbyte.Init(dl)
+	//h0 := reflect.SliceHeader{
+	//	Data: uintptr(addr0),
+	//	Len:  0,
+	//	Cap:  dl,
+	//}
+	//dst := cbyte.Bytes(h0)
+	//dst = append(dst[:0], r.s...)
+	if r.d == nil {
+		r.d = make([]byte, 0, dl)
+	} else if cap(r.d) < dl {
+		r.d = append(r.d, make([]byte, dl-cap(r.d))...)
 	}
-	dst := cbyte.Bytes(h0)
-	dst = append(dst[:0], r.s...)
+	r.d = append(r.d[:0], r.s...)
 
-	addr1 := cbyte.Init(dl)
-	h1 := reflect.SliceHeader{
-		Data: uintptr(addr1),
-		Len:  dl,
-		Cap:  dl,
+	//addr1 := cbyte.Init(dl)
+	//h1 := reflect.SliceHeader{
+	//	Data: uintptr(addr1),
+	//	Len:  dl,
+	//	Cap:  dl,
+	//}
+	//buf := cbyte.Bytes(h1)
+	//defer cbyte.ReleaseSlice(buf)
+	if r.b == nil {
+		r.b = make([]byte, dl, dl)
+	} else if cap(r.b) < dl {
+		r.b = append(r.b, make([]byte, dl-cap(r.b))...)
 	}
-	buf := cbyte.Bytes(h1)
-	defer cbyte.ReleaseSlice(buf)
 
 	for i := 0; i < len(r.o.q); i++ {
 		o := r.o.q[i]
 		n := r.n.q[i]
 		c := bytes.Count(r.s, o)
-		buf = ReplaceTo(buf, dst, o, n, c)
-		dst = append(dst[:0], buf...)
+		r.b = ReplaceTo(r.b, r.d, o, n, c)
+		r.d = append(r.d[:0], r.b...)
 	}
 
-	return dst[:l]
+	return r.d[:l]
 }
 
 func (r *BatchReplace) Reset() {
