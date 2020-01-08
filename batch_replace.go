@@ -161,11 +161,11 @@ func (q *batchReplaceQueue) add(p []byte, factor int) {
 	}
 	q.a += len(p) * factor
 	if q.i < q.c {
-		q.q[q.i] = p
+		q.q[q.i] = append(q.q[q.i][:0], p...)
 		q.i++
 		return
 	}
-	q.q = append(q.q, p)
+	q.q = append(q.q, append([]byte(nil), p...))
 	q.i++
 	q.c++
 }

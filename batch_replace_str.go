@@ -6,7 +6,7 @@ type BatchReplaceStr struct {
 
 func NewBatchReplaceStr(s string) *BatchReplaceStr {
 	r := BatchReplaceStr{
-		r: NewBatchReplace(sb(s)),
+		r: NewBatchReplace(cpy(s)),
 	}
 	return &r
 }

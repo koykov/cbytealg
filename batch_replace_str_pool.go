@@ -14,8 +14,8 @@ func (p *BatchReplaceStrPool) Get(s string) *BatchReplaceStr {
 	v := p.p.Get()
 	if v != nil {
 		if r, ok := v.(*BatchReplaceStr); ok {
-			//r.s = append(r.s, s...)
-			r.r.s = sb(s)
+			r.r.s = append(r.r.s, s...)
+			//r.r.s = sb(s)
 			return r
 		}
 	}
