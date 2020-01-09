@@ -27,7 +27,6 @@ func TestBatchReplace_Replace(t *testing.T) {
 	if !bytes.Equal(n, breplExpect) {
 		t.Error("BatchReplace: mismatch result and expectation")
 	}
-	//cbyte.ReleaseSlice(n)
 }
 
 func BenchmarkBatchReplace_Replace(b *testing.B) {
@@ -42,7 +41,6 @@ func BenchmarkBatchReplace_Replace(b *testing.B) {
 		if !bytes.Equal(n, breplExpect) {
 			b.Error("BatchReplace: mismatch result and expectation")
 		}
-		//cbyte.ReleaseSlice(n)
 		BatchPool.Put(r)
 	}
 }

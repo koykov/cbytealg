@@ -103,16 +103,8 @@ func (r *BatchReplace) ReplaceFloatTunable(o []byte, n float64, fmt byte, prec, 
 
 func (r *BatchReplace) Commit() []byte {
 	l := len(r.s) + r.n.a - r.o.a
-	dl := (len(r.s) + r.n.a - r.o.a) * 2
+	dl := l * 2
 
-	//addr0 := cbyte.Init(dl)
-	//h0 := reflect.SliceHeader{
-	//	Data: uintptr(addr0),
-	//	Len:  0,
-	//	Cap:  dl,
-	//}
-	//dst := cbyte.Bytes(h0)
-	//dst = append(dst[:0], r.s...)
 	if r.d == nil {
 		r.d = make([]byte, 0, dl)
 	} else if cap(r.d) < dl {
@@ -120,25 +112,18 @@ func (r *BatchReplace) Commit() []byte {
 	}
 	r.d = append(r.d[:0], r.s...)
 
-	//addr1 := cbyte.Init(dl)
-	//h1 := reflect.SliceHeader{
-	//	Data: uintptr(addr1),
-	//	Len:  dl,
-	//	Cap:  dl,
-	//}
-	//buf := cbyte.Bytes(h1)
-	//defer cbyte.ReleaseSlice(buf)
 	if r.b == nil {
-		r.b = make([]byte, dl, dl)
+		r.b = make([]byte, 0, dl)
 	} else if cap(r.b) < dl {
 		r.b = append(r.b, make([]byte, dl-cap(r.b))...)
+		r.b = r.b[:0]
 	}
 
 	for i := 0; i < len(r.o.q); i++ {
 		o := r.o.q[i]
 		n := r.n.q[i]
 		c := bytes.Count(r.s, o)
-		r.b = ReplaceTo(r.b, r.d, o, n, c)
+		r.b = ReplaceTo(r.b[:0], r.d, o, n, c)
 		r.d = append(r.d[:0], r.b...)
 	}
 

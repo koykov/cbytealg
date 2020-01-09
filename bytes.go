@@ -132,7 +132,7 @@ func Replace(s, old, new []byte, n int) []byte {
 	addr := cbyte.Init(l)
 	h := reflect.SliceHeader{
 		Data: uintptr(addr),
-		Len:  l,
+		Len:  0,
 		Cap:  l,
 	}
 	dst := cbyte.Bytes(h)
@@ -140,27 +140,13 @@ func Replace(s, old, new []byte, n int) []byte {
 }
 
 func ReplaceTo(dst, s, old, new []byte, n int) []byte {
-	w := 0
 	start := 0
-	tail := 0
-	if len(new) > len(old) {
-		tail = (len(new) - len(old)) * n
-	}
 	for i := 0; i < n; i++ {
 		j := start + bytes.Index(s[start:], old)
-		if w >= len(dst) || start >= len(s) || j >= len(s) {
-			return dst
-		}
-		w += copy(dst[w:], s[start:j])
-		if w >= len(dst) {
-			return dst
-		}
-		w += copy(dst[w:], new)
+		dst = append(dst, s[start:j]...)
+		dst = append(dst, new...)
 		start = j + len(old)
 	}
-	w += copy(dst[w:], s[start:])
-	if tail > 0 && tail <= len(s) {
-		w += copy(dst[w:], s[len(s)-tail:])
-	}
+	dst = append(dst, s[start:]...)
 	return dst
 }

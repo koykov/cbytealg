@@ -27,7 +27,6 @@ func TestBatchReplaceStr_Replace(t *testing.T) {
 	if n != breplExpectS {
 		t.Error("BatchReplaceStr: mismatch result and expectation")
 	}
-	//cbyte.ReleaseStr(n)
 }
 
 func BenchmarkBatchReplaceStr_Replace(b *testing.B) {
@@ -42,7 +41,6 @@ func BenchmarkBatchReplaceStr_Replace(b *testing.B) {
 		if n != breplExpectS {
 			b.Error("BatchReplaceStr: mismatch result and expectation")
 		}
-		//cbyte.ReleaseStr(n)
 		BatchStrPool.Put(r)
 	}
 }

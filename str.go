@@ -14,7 +14,7 @@ func bs(p []byte) string {
 	return fastconv.B2S(p)
 }
 
-func cpy(s string) []byte {
+func scopy(s string) []byte {
 	return append([]byte(nil), s...)
 }
 
