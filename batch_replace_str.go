@@ -11,35 +11,35 @@ func NewBatchReplaceStr(s string) *BatchReplaceStr {
 	return &r
 }
 
-func (r *BatchReplaceStr) Replace(o string, n string) *BatchReplaceStr {
-	r.r.Replace(sb(o), sb(n))
+func (r *BatchReplaceStr) Replace(old string, new string) *BatchReplaceStr {
+	r.r.Replace(sb(old), sb(new))
 	return r
 }
 
-func (r *BatchReplaceStr) ReplaceInt(o string, n int64) *BatchReplaceStr {
-	return r.ReplaceIntBase(o, n, 10)
+func (r *BatchReplaceStr) ReplaceInt(old string, new int64) *BatchReplaceStr {
+	return r.ReplaceIntBase(old, new, 10)
 }
 
-func (r *BatchReplaceStr) ReplaceIntBase(o string, n int64, base int) *BatchReplaceStr {
-	r.r.ReplaceIntBase(sb(o), n, base)
+func (r *BatchReplaceStr) ReplaceIntBase(old string, new int64, base int) *BatchReplaceStr {
+	r.r.ReplaceIntBase(sb(old), new, base)
 	return r
 }
 
-func (r *BatchReplaceStr) ReplaceUint(o string, n uint64) *BatchReplaceStr {
-	return r.ReplaceUintBase(o, n, 10)
+func (r *BatchReplaceStr) ReplaceUint(old string, new uint64) *BatchReplaceStr {
+	return r.ReplaceUintBase(old, new, 10)
 }
 
-func (r *BatchReplaceStr) ReplaceUintBase(o string, n uint64, base int) *BatchReplaceStr {
-	r.r.ReplaceUintBase(sb(o), n, base)
+func (r *BatchReplaceStr) ReplaceUintBase(old string, new uint64, base int) *BatchReplaceStr {
+	r.r.ReplaceUintBase(sb(old), new, base)
 	return r
 }
 
-func (r *BatchReplaceStr) ReplaceFloat(o string, n float64) *BatchReplaceStr {
-	return r.ReplaceFloatTunable(o, n, 'f', -1, 64)
+func (r *BatchReplaceStr) ReplaceFloat(old string, new float64) *BatchReplaceStr {
+	return r.ReplaceFloatTunable(old, new, 'f', -1, 64)
 }
 
-func (r *BatchReplaceStr) ReplaceFloatTunable(o string, n float64, fmt byte, prec, bitSize int) *BatchReplaceStr {
-	r.r.ReplaceFloatTunable(sb(o), n, fmt, prec, bitSize)
+func (r *BatchReplaceStr) ReplaceFloatTunable(old string, new float64, fmt byte, prec, bitSize int) *BatchReplaceStr {
+	r.r.ReplaceFloatTunable(sb(old), new, fmt, prec, bitSize)
 	return r
 }
 

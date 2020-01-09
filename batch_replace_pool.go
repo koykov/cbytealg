@@ -12,7 +12,7 @@ func (p *BatchReplacePool) Get(s []byte) *BatchReplace {
 	v := p.p.Get()
 	if v != nil {
 		if r, ok := v.(*BatchReplace); ok {
-			r.s = append(r.s, s...)
+			r.src = append(r.src, s...)
 			return r
 		}
 	}
