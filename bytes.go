@@ -148,6 +148,9 @@ func ReplaceTo(dst, s, old, new []byte, n int) []byte {
 	}
 	for i := 0; i < n; i++ {
 		j := start + bytes.Index(s[start:], old)
+		if w >= len(dst) || j >= len(s) {
+			return dst
+		}
 		w += copy(dst[w:], s[start:j])
 		w += copy(dst[w:], new)
 		start = j + len(old)
