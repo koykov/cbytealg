@@ -103,22 +103,8 @@ func (r *BatchReplace) ReplaceFloatTunable(o []byte, n float64, fmt byte, prec, 
 
 func (r *BatchReplace) Commit() []byte {
 	l := len(r.s) + r.n.a - r.o.a
-	dl := l * 2
 
-	if r.d == nil {
-		r.d = make([]byte, 0, dl)
-	} else if cap(r.d) < dl {
-		r.d = append(r.d, make([]byte, dl-cap(r.d))...)
-	}
 	r.d = append(r.d[:0], r.s...)
-
-	if r.b == nil {
-		r.b = make([]byte, 0, dl)
-	} else if cap(r.b) < dl {
-		r.b = append(r.b, make([]byte, dl-cap(r.b))...)
-		r.b = r.b[:0]
-	}
-
 	for i := 0; i < len(r.o.q); i++ {
 		o := r.o.q[i]
 		n := r.n.q[i]
