@@ -86,7 +86,7 @@ func TestSplit(t *testing.T) {
 //	if !EqualSet(r, splitExpectLong) {
 //		t.Error("Split: mismatch result and expectation")
 //	}
-//	cbyte.ReleaseSliceSet(r)
+//	cbyte.ReleaseBytesSet(r)
 //}
 
 func BenchmarkSplit(b *testing.B) {
@@ -115,7 +115,7 @@ func TestJoin(t *testing.T) {
 	if !bytes.Equal(r, joinExpect) {
 		t.Error("Join: mismatch result and expectation")
 	}
-	cbyte.ReleaseSlice(r)
+	cbyte.ReleaseBytes(r)
 }
 
 //func TestJoinLong(t *testing.T) {
@@ -123,7 +123,7 @@ func TestJoin(t *testing.T) {
 //	if !bytes.Equal(r, joinExpectLong) {
 //		t.Error("Join: mismatch result and expectation")
 //	}
-//	cbyte.ReleaseSlice(r)
+//	cbyte.ReleaseBytes(r)
 //}
 
 func BenchmarkJoin(b *testing.B) {
@@ -133,7 +133,7 @@ func BenchmarkJoin(b *testing.B) {
 		if !bytes.Equal(r, joinExpect) {
 			b.Error("Join: mismatch result and expectation")
 		}
-		cbyte.ReleaseSlice(r)
+		cbyte.ReleaseBytes(r)
 	}
 }
 
@@ -154,7 +154,7 @@ func BenchmarkJoin_Native(b *testing.B) {
 //		if !bytes.Equal(r, joinExpectLong) {
 //			b.Error("Join: mismatch result and expectation")
 //		}
-//		cbyte.ReleaseSlice(r)
+//		cbyte.ReleaseBytes(r)
 //	}
 //}
 //
@@ -173,7 +173,7 @@ func TestReplace(t *testing.T) {
 	if !bytes.Equal(r, replExpect) {
 		t.Error("Replace: mismatch result and expectation")
 	}
-	cbyte.ReleaseSlice(r)
+	cbyte.ReleaseBytes(r)
 }
 
 func BenchmarkReplace(b *testing.B) {
@@ -183,7 +183,7 @@ func BenchmarkReplace(b *testing.B) {
 		if !bytes.Equal(r, replExpect) {
 			b.Error("Replace: mismatch result and expectation")
 		}
-		cbyte.ReleaseSlice(r)
+		cbyte.ReleaseBytes(r)
 	}
 }
 

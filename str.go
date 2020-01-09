@@ -49,7 +49,7 @@ func SplitStr(s, sep string) []string {
 func SplitStrN(s, sep string, n int) []string {
 	r := SplitN(sb(s), sb(sep), n)
 	h := cbyte.HeaderSet(r)
-	a := cbyte.SliceStrSet(h)
+	a := cbyte.StrSet(h)
 	for i, b := range r {
 		a[i] = bs(b)
 	}
