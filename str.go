@@ -6,10 +6,12 @@ import (
 	"reflect"
 )
 
+// Make byte slice copy of given string.
 func scopy(s string) []byte {
 	return append([]byte(nil), s...)
 }
 
+// Check if two string slices is equal.
 func EqualStrSet(a, b []string) bool {
 	if len(a) != len(b) {
 		return false
@@ -22,22 +24,27 @@ func EqualStrSet(a, b []string) bool {
 	return true
 }
 
+// Alloc-free string trim.
 func TrimStr(p, cut string) string {
 	return fc.B2S(trim(fc.S2B(p), fc.S2B(cut), trimBoth))
 }
 
+// String left trim.
 func TrimLeftStr(p, cut string) string {
 	return fc.B2S(trim(fc.S2B(p), fc.S2B(cut), trimLeft))
 }
 
+// String right trim.
 func TrimRightStr(p, cut string) string {
 	return fc.B2S(trim(fc.S2B(p), fc.S2B(cut), trimRight))
 }
 
+// Alloc-free split string.
 func SplitStr(s, sep string) []string {
 	return SplitStrN(s, sep, -1)
 }
 
+// Split string to N sub-strings if possible.
 func SplitStrN(s, sep string, n int) []string {
 	r := SplitN(fc.S2B(s), fc.S2B(sep), n)
 	h := cbyte.HeaderSet(r)
@@ -48,6 +55,7 @@ func SplitStrN(s, sep string, n int) []string {
 	return a
 }
 
+// Alloc-free string join.
 func JoinStr(s []string, sep string) string {
 	if len(s) == 0 {
 		return ""
@@ -76,10 +84,12 @@ func JoinStr(s []string, sep string) string {
 	return cbyte.Str(h)
 }
 
+// Alloc-free replace.
 func ReplaceStr(s, old, new string, n int) string {
 	return fc.B2S(Replace(fc.S2B(s), fc.S2B(old), fc.S2B(new), n))
 }
 
+// Replace to destination string.
 func ReplaceStrTo(dst, s, old, new string, n int) string {
 	return fc.B2S(ReplaceTo(fc.S2B(dst), fc.S2B(s), fc.S2B(old), fc.S2B(new), n))
 }

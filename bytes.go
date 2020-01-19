@@ -7,11 +7,13 @@ import (
 )
 
 const (
+	// Trim directions.
 	trimBoth  = 0
 	trimLeft  = 1
 	trimRight = 2
 )
 
+// Check if two slices of bytes slices is equal.
 func EqualSet(a, b [][]byte) bool {
 	if len(a) != len(b) {
 		return false
@@ -24,18 +26,24 @@ func EqualSet(a, b [][]byte) bool {
 	return true
 }
 
+// Fast and alloc-free trim.
 func Trim(p, cut []byte) []byte {
 	return trim(p, cut, trimBoth)
 }
 
+// Left trim.
 func TrimLeft(p, cut []byte) []byte {
 	return trim(p, cut, trimLeft)
 }
 
+// Right trim.
 func TrimRight(p, cut []byte) []byte {
 	return trim(p, cut, trimRight)
 }
 
+// Generic trim.
+//
+// Just calculates trim edges and return sub-slice.
 func trim(p, cut []byte, dir int) []byte {
 	l, r := 0, len(p)-1
 	if dir == trimBoth || dir == trimLeft {
@@ -57,10 +65,12 @@ func trim(p, cut []byte, dir int) []byte {
 	return p[l : r+1]
 }
 
+// Alloc-free split.
 func Split(s, sep []byte) [][]byte {
 	return SplitN(s, sep, -1)
 }
 
+// Split slice to N sub-slices if possible.
 func SplitN(s, sep []byte, n int) [][]byte {
 	if n < 0 {
 		n = bytes.Count(s, sep) + 1
@@ -88,6 +98,7 @@ func SplitN(s, sep []byte, n int) [][]byte {
 	return a[:i+1]
 }
 
+// Alloc-free join.
 func Join(s [][]byte, sep []byte) []byte {
 	if len(s) == 0 {
 		return []byte{}
@@ -111,6 +122,7 @@ func Join(s [][]byte, sep []byte) []byte {
 	return cbyte.Bytes(h)
 }
 
+// Alloc free replace.
 func Replace(s, old, new []byte, n int) []byte {
 	m := 0
 	if n != 0 {
@@ -128,6 +140,9 @@ func Replace(s, old, new []byte, n int) []byte {
 	return ReplaceTo(dst, s, old, new, n)
 }
 
+// Generic replace in destination slice.
+//
+// Destination should has enough space (capacity).
 func ReplaceTo(dst, s, old, new []byte, n int) []byte {
 	start := 0
 	for i := 0; i < n; i++ {
