@@ -1,5 +1,9 @@
 package cbytealg
 
+import (
+	fc "github.com/koykov/fastconv"
+)
+
 type BatchReplaceStr struct {
 	r *BatchReplace
 }
@@ -12,7 +16,7 @@ func NewBatchReplaceStr(s string) *BatchReplaceStr {
 }
 
 func (r *BatchReplaceStr) Replace(old string, new string) *BatchReplaceStr {
-	r.r.Replace(sb(old), sb(new))
+	r.r.Replace(fc.S2B(old), fc.S2B(new))
 	return r
 }
 
@@ -21,7 +25,7 @@ func (r *BatchReplaceStr) ReplaceInt(old string, new int64) *BatchReplaceStr {
 }
 
 func (r *BatchReplaceStr) ReplaceIntBase(old string, new int64, base int) *BatchReplaceStr {
-	r.r.ReplaceIntBase(sb(old), new, base)
+	r.r.ReplaceIntBase(fc.S2B(old), new, base)
 	return r
 }
 
@@ -30,7 +34,7 @@ func (r *BatchReplaceStr) ReplaceUint(old string, new uint64) *BatchReplaceStr {
 }
 
 func (r *BatchReplaceStr) ReplaceUintBase(old string, new uint64, base int) *BatchReplaceStr {
-	r.r.ReplaceUintBase(sb(old), new, base)
+	r.r.ReplaceUintBase(fc.S2B(old), new, base)
 	return r
 }
 
@@ -39,12 +43,12 @@ func (r *BatchReplaceStr) ReplaceFloat(old string, new float64) *BatchReplaceStr
 }
 
 func (r *BatchReplaceStr) ReplaceFloatTunable(old string, new float64, fmt byte, prec, bitSize int) *BatchReplaceStr {
-	r.r.ReplaceFloatTunable(sb(old), new, fmt, prec, bitSize)
+	r.r.ReplaceFloatTunable(fc.S2B(old), new, fmt, prec, bitSize)
 	return r
 }
 
 func (r *BatchReplaceStr) Commit() string {
-	return bs(r.r.Commit())
+	return fc.B2S(r.r.Commit())
 }
 
 func (r *BatchReplaceStr) Reset() {

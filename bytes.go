@@ -98,20 +98,15 @@ func Join(s [][]byte, sep []byte) []byte {
 		n += len(v)
 	}
 
-	addr := cbyte.Init(n)
+	h := cbyte.InitHeader(n, n)
 	o := 0
 	for i, ss := range s {
-		cbyte.Memcpy(addr, uint64(o), ss)
+		cbyte.Memcpy(uint64(h.Data), uint64(o), ss)
 		o += len(ss)
 		if i < ls-1 {
-			cbyte.Memcpy(addr, uint64(o), sep)
+			cbyte.Memcpy(uint64(h.Data), uint64(o), sep)
 			o += lsep
 		}
-	}
-	h := reflect.SliceHeader{
-		Data: uintptr(addr),
-		Len:  n,
-		Cap:  n,
 	}
 	return cbyte.Bytes(h)
 }
@@ -129,13 +124,7 @@ func Replace(s, old, new []byte, n int) []byte {
 	}
 
 	l := len(s) + n*(len(new)-len(old))
-	addr := cbyte.Init(l)
-	h := reflect.SliceHeader{
-		Data: uintptr(addr),
-		Len:  0,
-		Cap:  l,
-	}
-	dst := cbyte.Bytes(h)
+	dst := cbyte.InitBytes(0, l)
 	return ReplaceTo(dst, s, old, new, n)
 }
 
