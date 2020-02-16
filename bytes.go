@@ -2,8 +2,9 @@ package cbytealg
 
 import (
 	"bytes"
-	"github.com/koykov/cbyte"
 	"reflect"
+
+	"github.com/koykov/cbyte"
 )
 
 const (
@@ -153,4 +154,22 @@ func ReplaceTo(dst, s, old, new []byte, n int) []byte {
 	}
 	dst = append(dst, s[start:]...)
 	return dst
+}
+
+// Repeat returns a cbyte slice consisting of count copies of p.
+//
+// It returns p on negative n or overflow instead of native (it panics).
+func Repeat(p []byte, n int) []byte {
+	if (n < 0) || (n > 0 && len(p)*n/n != len(p)) {
+		// Negative count or overflow.
+		return p
+	}
+	c := len(p) * n
+	nb := cbyte.InitBytes(c, c)
+	bp := copy(nb, p)
+	for bp < len(nb) {
+		copy(nb[bp:], nb[:bp])
+		bp *= 2
+	}
+	return nb
 }

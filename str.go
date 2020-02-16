@@ -1,9 +1,10 @@
 package cbytealg
 
 import (
+	"reflect"
+
 	"github.com/koykov/cbyte"
 	fc "github.com/koykov/fastconv"
-	"reflect"
 )
 
 // Make byte slice copy of given string.
@@ -92,4 +93,9 @@ func ReplaceStr(s, old, new string, n int) string {
 // Replace to destination string.
 func ReplaceStrTo(dst, s, old, new string, n int) string {
 	return fc.B2S(ReplaceTo(fc.S2B(dst), fc.S2B(s), fc.S2B(old), fc.S2B(new), n))
+}
+
+// Repeat returns a cbyte string consisting of count copies of the string s.
+func RepeatStr(s string, n int) string {
+	return fc.B2S(Repeat(fc.S2B(s), n))
 }

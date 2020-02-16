@@ -1,12 +1,18 @@
 package cbytealg
 
 import (
-	"github.com/koykov/cbyte"
 	"strings"
 	"testing"
+
+	"github.com/koykov/cbyte"
+	"github.com/koykov/fastconv"
 )
 
 var (
+	loremStr          = fastconv.B2S(lorem)
+	loremWithSpaceStr = fastconv.B2S(loremWithSpace)
+	loremRepStr       = fastconv.B2S(loremRep)
+
 	trimOriginS = "..foo bar!!???"
 	trimExpectS = "foo bar"
 	trimCutS    = "?!."
@@ -139,6 +145,27 @@ func BenchmarkReplaceStr_Native(b *testing.B) {
 		r := strings.Replace(replOriginS, replTagsS[0], replReplS[0], -1)
 		if r != replExpectS {
 			b.Error("Replace: mismatch result and expectation")
+		}
+	}
+}
+
+func BenchmarkRepeatStr(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		r := RepeatStr(loremWithSpaceStr, 1000)
+		if r != loremRepStr {
+			b.Error("Repeat: mismatch result and expectation")
+		}
+		cbyte.ReleaseStr(r)
+	}
+}
+
+func BenchmarkRepeatStr_Native(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		r := strings.Repeat(loremWithSpaceStr, 1000)
+		if r != loremRepStr {
+			b.Error("Repeat: mismatch result and expectation")
 		}
 	}
 }
