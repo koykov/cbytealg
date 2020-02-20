@@ -199,23 +199,31 @@ func BenchmarkReplace_Native(b *testing.B) {
 	}
 }
 
-func BenchmarkRepeat(b *testing.B) {
-	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
-		r := Repeat(loremWithSpace, 1000)
-		if !bytes.Equal(r, loremRep) {
-			b.Error("Repeat: mismatch result and expectation")
-		}
-		cbyte.ReleaseBytes(r)
+func TestRepeat(t *testing.T) {
+	r := Repeat(loremWithSpace, 1000)
+	if !bytes.Equal(r, loremRep) {
+		t.Error("Repeat: mismatch result and expectation")
 	}
+	// cbyte.ReleaseBytes(r)
 }
 
-func BenchmarkRepeat_Native(b *testing.B) {
-	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
-		r := bytes.Repeat(loremWithSpace, 1000)
-		if !bytes.Equal(r, loremRep) {
-			b.Error("Repeat: mismatch result and expectation")
-		}
-	}
-}
+// func BenchmarkRepeat(b *testing.B) {
+// 	b.ReportAllocs()
+// 	for i := 0; i < b.N; i++ {
+// 		r := Repeat(loremWithSpace, 1000)
+// 		if !bytes.Equal(r, loremRep) {
+// 			b.Error("Repeat: mismatch result and expectation")
+// 		}
+// 		cbyte.ReleaseBytes(r)
+// 	}
+// }
+
+// func BenchmarkRepeat_Native(b *testing.B) {
+// 	b.ReportAllocs()
+// 	for i := 0; i < b.N; i++ {
+// 		r := bytes.Repeat(loremWithSpace, 1000)
+// 		if !bytes.Equal(r, loremRep) {
+// 			b.Error("Repeat: mismatch result and expectation")
+// 		}
+// 	}
+// }

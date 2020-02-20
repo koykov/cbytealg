@@ -149,23 +149,31 @@ func BenchmarkReplaceStr_Native(b *testing.B) {
 	}
 }
 
-func BenchmarkRepeatStr(b *testing.B) {
-	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
-		r := RepeatStr(loremWithSpaceStr, 1000)
-		if r != loremRepStr {
-			b.Error("Repeat: mismatch result and expectation")
-		}
-		cbyte.ReleaseStr(r)
+func TestRepeatStr(t *testing.T) {
+	r := RepeatStr(loremWithSpaceStr, 1000)
+	if r != loremRepStr {
+		t.Error("Repeat: mismatch result and expectation")
 	}
+	// cbyte.ReleaseStr(r)
 }
 
-func BenchmarkRepeatStr_Native(b *testing.B) {
-	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
-		r := strings.Repeat(loremWithSpaceStr, 1000)
-		if r != loremRepStr {
-			b.Error("Repeat: mismatch result and expectation")
-		}
-	}
-}
+// func BenchmarkRepeatStr(b *testing.B) {
+// 	b.ReportAllocs()
+// 	for i := 0; i < b.N; i++ {
+// 		r := RepeatStr(loremWithSpaceStr, 1000)
+// 		if r != loremRepStr {
+// 			b.Error("Repeat: mismatch result and expectation")
+// 		}
+// 		cbyte.ReleaseStr(r)
+// 	}
+// }
+
+// func BenchmarkRepeatStr_Native(b *testing.B) {
+// 	b.ReportAllocs()
+// 	for i := 0; i < b.N; i++ {
+// 		r := strings.Repeat(loremWithSpaceStr, 1000)
+// 		if r != loremRepStr {
+// 			b.Error("Repeat: mismatch result and expectation")
+// 		}
+// 	}
+// }
