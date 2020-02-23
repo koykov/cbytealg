@@ -33,6 +33,8 @@ var (
 	replReplS = []string{
 		"long string",
 	}
+
+	idxAtStr = fastconv.B2S(idxAt)
 )
 
 func TestTrimStr(t *testing.T) {
@@ -177,3 +179,10 @@ func TestRepeatStr(t *testing.T) {
 // 		}
 // 	}
 // }
+
+func TestIndexAtStr(t *testing.T) {
+	r := IndexAtStr(idxAtStr, "#", 8)
+	if r != idxExpect {
+		t.Error("IndexAtStr: mismatch result and expectation")
+	}
+}

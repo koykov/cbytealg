@@ -99,3 +99,8 @@ func ReplaceStrTo(dst, s, old, new string, n int) string {
 func RepeatStr(s string, n int) string {
 	return fc.B2S(Repeat(fc.S2B(s), n))
 }
+
+// IndexAtStr is equal to strings.Index() but doesn't consider occurrences of sep in s[:at].
+func IndexAtStr(s, sep string, at int) int {
+	return IndexAt(fc.S2B(s), fc.S2B(sep), at)
+}

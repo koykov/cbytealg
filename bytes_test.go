@@ -46,6 +46,9 @@ var (
 	replRepl = [][]byte{
 		[]byte("long string"),
 	}
+
+	idxAt     = []byte("some # string with # tokens")
+	idxExpect = 19
 )
 
 func TestTrim(t *testing.T) {
@@ -227,3 +230,10 @@ func TestRepeat(t *testing.T) {
 // 		}
 // 	}
 // }
+
+func TestIndexAt(t *testing.T) {
+	r := IndexAt(idxAt, []byte("#"), 8)
+	if r != idxExpect {
+		t.Error("IndexAt: mismatch result and expectation")
+	}
+}

@@ -173,3 +173,15 @@ func Repeat(p []byte, n int) []byte {
 	}
 	return nb
 }
+
+// IndexAt is equal to bytes.Index() but doesn't consider occurrences of sep in p[:at].
+func IndexAt(p, sep []byte, at int) int {
+	if at < 0 {
+		return -1
+	}
+	i := bytes.Index(p[at:], sep)
+	if i < 0 {
+		return i
+	}
+	return i + at
+}
