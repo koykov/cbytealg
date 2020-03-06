@@ -3,6 +3,8 @@ package cbytealg
 import (
 	"bytes"
 	"reflect"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/koykov/cbyte"
 )
@@ -184,4 +186,30 @@ func IndexAt(p, sep []byte, at int) int {
 		return i
 	}
 	return i + at
+}
+
+func ToUpper(p []byte) []byte { return Map(unicode.ToUpper, p) }
+func ToLower(p []byte) []byte { return Map(unicode.ToLower, p) }
+func ToTitle(p []byte) []byte { return Map(unicode.ToTitle, p) }
+
+func Map(mapping func(r rune) rune, p []byte) []byte {
+	maxbytes := len(p)
+	nbytes := 0
+	for i := 0; i < len(p); {
+		wid := 1
+		r := rune(p[i])
+		if r >= utf8.RuneSelf {
+			r, wid = utf8.DecodeRune(p[i:])
+		}
+		r = mapping(r)
+		if r >= 0 {
+			rl := utf8.RuneLen(r)
+			if rl < 0 {
+				rl = len(string(utf8.RuneError))
+			}
+			nbytes += utf8.EncodeRune(p[nbytes:maxbytes], r)
+		}
+		i += wid
+	}
+	return p
 }

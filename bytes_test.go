@@ -49,6 +49,9 @@ var (
 
 	idxAt     = []byte("some # string with # tokens")
 	idxExpect = 19
+
+	toUpper = []byte("FOOBAR")
+	toLower = []byte("foobar")
 )
 
 func TestTrim(t *testing.T) {
@@ -235,5 +238,19 @@ func TestIndexAt(t *testing.T) {
 	r := IndexAt(idxAt, []byte("#"), 8)
 	if r != idxExpect {
 		t.Error("IndexAt: mismatch result and expectation")
+	}
+}
+
+func TestToLower(t *testing.T) {
+	r := ToLower(toUpper)
+	if !bytes.Equal(r, toLower) {
+		t.Error("ToLower: mismatch result and expectation")
+	}
+}
+
+func TestToUpper(t *testing.T) {
+	r := ToUpper(toLower)
+	if !bytes.Equal(r, toUpper) {
+		t.Error("ToUpper: mismatch result and expectation")
 	}
 }
