@@ -11,8 +11,8 @@ const (
 	baseHi = 36
 
 	// Buffers length.
-	intBufLen = 20
-	fltBufLen = 40
+	intBufLen = 64 // 64 bit + 1 for sign for base 2
+	fltBufLen = 24
 )
 
 // Replace queue.
@@ -115,7 +115,7 @@ func (r *BatchReplace) ReplaceFloatTunable(old []byte, new float64, fmt byte, pr
 	}
 	r.old.add(old, n)
 
-	nb := r.new.next(fltBufLen)
+	nb := r.new.next(max(prec+4, fltBufLen))
 	nb = strconv.AppendFloat(nb, new, fmt, prec, bitSize)
 	r.new.set(nb, n)
 	return r
@@ -183,5 +183,12 @@ func (q *batchReplaceQueue) next(max int) []byte {
 	q.queue = append(q.queue, b)
 	q.idx++
 	q.cap++
+	return b
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
 	return b
 }
