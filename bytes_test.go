@@ -52,6 +52,9 @@ var (
 
 	toUpper = []byte("FOOBAR")
 	toLower = []byte("foobar")
+
+	cpyOrigin = []byte("foobar")
+	cpyExpect = []byte("foobar")
 )
 
 func TestTrim(t *testing.T) {
@@ -252,5 +255,22 @@ func TestToUpper(t *testing.T) {
 	r := ToUpper(toLower)
 	if !bytes.Equal(r, toUpper) {
 		t.Error("ToUpper: mismatch result and expectation")
+	}
+}
+
+func TestCopy(t *testing.T) {
+	r := Copy(cpyOrigin)
+	if !bytes.Equal(r, cpyExpect) {
+		t.Error("Copy: mismatch result and expectation")
+	}
+}
+
+func BenchmarkCopy(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		r := Copy(cpyOrigin)
+		if !bytes.Equal(r, cpyExpect) {
+			b.Error("Copy: mismatch result and expectation")
+		}
 	}
 }

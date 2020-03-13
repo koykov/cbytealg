@@ -213,3 +213,7 @@ func Map(mapping func(r rune) rune, p []byte) []byte {
 	}
 	return p
 }
+
+func Copy(p []byte) []byte {
+	return append([]byte(nil), p...)
+}

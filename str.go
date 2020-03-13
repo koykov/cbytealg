@@ -104,3 +104,7 @@ func RepeatStr(s string, n int) string {
 func IndexAtStr(s, sep string, at int) int {
 	return IndexAt(fc.S2B(s), fc.S2B(sep), at)
 }
+
+func CopyStr(s string) string {
+	return fc.B2S(append([]byte(nil), s...))
+}
