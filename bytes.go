@@ -101,6 +101,24 @@ func SplitN(s, sep []byte, n int) [][]byte {
 	return a[:i+1]
 }
 
+func AppendSplit(buf [][]byte, s, sep []byte, n int) [][]byte {
+	if n < 0 {
+		n = bytes.Count(s, sep) + 1
+	}
+	i := 0
+	for i < n {
+		m := bytes.Index(s, sep)
+		if m < 0 {
+			break
+		}
+		buf = append(buf, s[:m:m])
+		s = s[m+len(sep):]
+		i++
+	}
+	buf = append(buf, s)
+	return buf[:i+1]
+}
+
 // Alloc-free join.
 func Join(s [][]byte, sep []byte) []byte {
 	if len(s) == 0 {

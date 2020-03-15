@@ -72,6 +72,14 @@ func TestSplitStr(t *testing.T) {
 	cbyte.ReleaseStrSet(r)
 }
 
+func TestAppendSplitStr(t *testing.T) {
+	buf := make([]string, 0)
+	buf = AppendSplitStr(buf, splitOriginS, splitSepS, -1)
+	if !EqualStrSet(buf, splitExpectS) {
+		t.Error("AppendSplitStr: mismatch result and expectation")
+	}
+}
+
 func BenchmarkSplitStr(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
@@ -89,6 +97,18 @@ func BenchmarkSplitStr_Native(b *testing.B) {
 		r := strings.Split(splitOriginS, splitSepS)
 		if !EqualStrSet(r, splitExpectS) {
 			b.Error("Split: mismatch result and expectation")
+		}
+	}
+}
+
+func BenchmarkAppendSplitStr(b *testing.B) {
+	buf := make([]string, 0)
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		buf = buf[:0]
+		buf = AppendSplitStr(buf, splitOriginS, splitSepS, -1)
+		if !EqualStrSet(buf, splitExpectS) {
+			b.Error("AppendSplitStr: mismatch result and expectation")
 		}
 	}
 }

@@ -2,6 +2,7 @@ package cbytealg
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/koykov/cbyte"
 	fc "github.com/koykov/fastconv"
@@ -54,6 +55,26 @@ func SplitStrN(s, sep string, n int) []string {
 		a[i] = fc.B2S(b)
 	}
 	return a
+}
+
+func AppendSplitStr(buf []string, s, sep string, n int) []string {
+	if n < 0 {
+		n = strings.Count(s, sep) + 1
+	}
+
+	n--
+	i := 0
+	for i < n {
+		m := strings.Index(s, sep)
+		if m < 0 {
+			break
+		}
+		buf = append(buf, s[:m])
+		s = s[m+len(sep):]
+		i++
+	}
+	buf = append(buf, s)
+	return buf[:i+1]
 }
 
 // Alloc-free string join.

@@ -92,6 +92,14 @@ func TestSplit(t *testing.T) {
 	cbyte.ReleaseBytesSet(r)
 }
 
+func TestAppendSplit(t *testing.T) {
+	buf := make([][]byte, 0)
+	buf = AppendSplit(buf, splitOrigin, splitSep, -1)
+	if !EqualSet(buf, splitExpect) {
+		t.Error("AppendSplit: mismatch result and expectation")
+	}
+}
+
 // func TestSplitLong(t *testing.T) {
 // 	r := Split(splitOriginLong, splitSepLong)
 // 	if !EqualSet(r, splitExpectLong) {
@@ -117,6 +125,18 @@ func BenchmarkSplit_Native(b *testing.B) {
 		r := bytes.Split(splitOrigin, splitSep)
 		if !EqualSet(r, splitExpect) {
 			b.Error("Split: mismatch result and expectation")
+		}
+	}
+}
+
+func BenchmarkAppendSplit(b *testing.B) {
+	buf := make([][]byte, 0)
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		buf = buf[:0]
+		buf = AppendSplit(buf, splitOrigin, splitSep, -1)
+		if !EqualSet(buf, splitExpect) {
+			b.Error("AppendSplit: mismatch result and expectation")
 		}
 	}
 }
