@@ -53,6 +53,13 @@ func NewBatchReplace(s []byte) *BatchReplace {
 	return &r
 }
 
+// Set the source.
+//
+// For use outside of pools.
+func (r *BatchReplace) SetSrc(src []byte) {
+	r.src = append(r.src[:0], src...)
+}
+
 // Register new byte slice replacement.
 func (r *BatchReplace) Replace(old []byte, new []byte) *BatchReplace {
 	n := bytes.Count(r.src, old)

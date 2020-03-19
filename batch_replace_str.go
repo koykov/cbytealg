@@ -17,6 +17,13 @@ func NewBatchReplaceStr(s string) *BatchReplaceStr {
 	return &r
 }
 
+// Set the source.
+//
+// For use outside of pools.
+func (r *BatchReplaceStr) SetSrc(s string) {
+	r.r.SetSrc(fc.S2B(s))
+}
+
 // Register new string replacement.
 func (r *BatchReplaceStr) Replace(old string, new string) *BatchReplaceStr {
 	r.r.Replace(fc.S2B(old), fc.S2B(new))
