@@ -23,7 +23,7 @@ func StrToBytes(dst []byte, val interface{}) ([]byte, error) {
 	switch val.(type) {
 	case *string:
 		dst = append(dst, fastconv.S2B(*val.(*string))...)
-	case []byte:
+	case string:
 		dst = append(dst, fastconv.S2B(val.(string))...)
 	default:
 		return dst, ErrUnknownType
