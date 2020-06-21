@@ -8,11 +8,6 @@ import (
 	fc "github.com/koykov/fastconv"
 )
 
-// Make byte slice copy of given string.
-func scopy(s string) []byte {
-	return append([]byte(nil), s...)
-}
-
 // Check if two string slices is equal.
 func EqualStrSet(a, b []string) bool {
 	if len(a) != len(b) {
@@ -24,21 +19,6 @@ func EqualStrSet(a, b []string) bool {
 		}
 	}
 	return true
-}
-
-// Alloc-free string trim.
-func TrimStr(p, cut string) string {
-	return fc.B2S(trim(fc.S2B(p), fc.S2B(cut), trimBoth))
-}
-
-// String left trim.
-func TrimLeftStr(p, cut string) string {
-	return fc.B2S(trim(fc.S2B(p), fc.S2B(cut), trimLeft))
-}
-
-// String right trim.
-func TrimRightStr(p, cut string) string {
-	return fc.B2S(trim(fc.S2B(p), fc.S2B(cut), trimRight))
 }
 
 // Alloc-free split string.
@@ -119,11 +99,6 @@ func ReplaceStrTo(dst, s, old, new string, n int) string {
 // Repeat returns a cbyte string consisting of count copies of the string s.
 func RepeatStr(s string, n int) string {
 	return fc.B2S(Repeat(fc.S2B(s), n))
-}
-
-// IndexAtStr is equal to strings.Index() but doesn't consider occurrences of sep in s[:at].
-func IndexAtStr(s, sep string, at int) int {
-	return IndexAt(fc.S2B(s), fc.S2B(sep), at)
 }
 
 func CopyStr(s string) string {
